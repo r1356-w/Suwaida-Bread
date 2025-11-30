@@ -1,14 +1,31 @@
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class AuthService {
-  // In a real app, this would make a network request to your backend.
-  // For this example, we'll simulate a network request.
+  final String _loginUrl = 'https://site66674-c6ivs9.scloudsite101.com/app/login_api.php';
+
   Future<String> login(String email, String password) async {
-    if (email == 'test@test.com' && password == 'password') {
-      // Simulate a successful login and return a dummy JWT.
-      return 'dummy_jwt_token';
+    final response = await http.post(
+      Uri.parse(_loginUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data['success'] == true && data['sessionToken'] != null) {
+        return data['sessionToken'];
+      } else {
+        throw Exception(data['message'] ?? 'Failed to log in');
+      }
     } else {
-      // Simulate a failed login.
-      throw Exception('Failed to log in');
+      throw Exception('Failed to log in with status code: ${response.statusCode}');
     }
   }
 }

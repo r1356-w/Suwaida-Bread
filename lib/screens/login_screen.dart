@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:suwaida_bread/repositories/auth_repository.dart';
 import 'package:suwaida_bread/screens/home_screen.dart';
@@ -31,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
+                border: OutlineInputBorder(borderRadius: BorderRadius.zero),
               ),
               keyboardType: TextInputType.emailAddress,
             ),
@@ -39,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
+                border: OutlineInputBorder(borderRadius: BorderRadius.zero),
               ),
               obscureText: true,
             ),
